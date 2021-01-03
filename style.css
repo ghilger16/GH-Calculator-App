@@ -5,7 +5,7 @@ body {
   background-color: rgba(58, 108, 155, 0.349);
 }
 
-.container {
+.calculator {
   padding: 5px;
   background-color: black;
   display: grid;
