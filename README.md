@@ -2,7 +2,7 @@
 
 A virtual calculator written in pure Javascript, HTML and CSS
 
-Try it[here](https://ghilger16.github.io/GH-Roshambo/)
+Try it [here](https://ghilger16.github.io/GH-Calculator-App/)
 
 ![](Images/preview.png)
 
