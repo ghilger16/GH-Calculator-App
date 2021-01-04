@@ -31,8 +31,10 @@ body {
 }
 
 #clear {
+  font-size: 25px;
+  font-weight: bold;
   grid-area: clear;
-  background: rgb(121, 13, 13);
+  background: rgb(182, 42, 42);
 }
 
 #divide {

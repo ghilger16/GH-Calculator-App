@@ -2,61 +2,81 @@
 
 let calculator = document.querySelector(".calculator");
 let calculatorDisplay = document.getElementById("display");
+let clearButton = document.getElementById("clear");
 let previousKey = "";
 let firstValue = "";
 let operator = "";
 let secondValue = "";
 
-document.querySelectorAll(".calculator").forEach((item) => {
-  item.addEventListener("click", (e) => {
-    if (e.target.className === "operator") {
-      previousKey = "operator";
-    } else if (e.target.className === "decimal") {
-      previousKey = "decimal";
-    } else if (e.target.className === "calculate") {
-      previousKey = "calculate";
-    } else {
-      previousKey = "digit";
-    }
-    console.log(previousKey);
-  });
-});
-
 document.querySelectorAll(".digits").forEach((item) => {
   item.addEventListener("click", (e) => {
-    const keyContent = e.target.textContent;
-    if (calculatorDisplay.innerText === "0" || previousKey === "operator") {
-      calculatorDisplay.innerText = keyContent;
+    const userSelection = e.target.textContent;
+    if (calculatorDisplay.textContent === "0" || previousKey === "operator") {
+      calculatorDisplay.textContent = userSelection;
     } else {
       if (calculatorDisplay.textContent.length < 10) {
-        calculatorDisplay.innerText = calculatorDisplay.innerText + keyContent;
+        calculatorDisplay.textContent =
+          calculatorDisplay.textContent + userSelection;
       }
     }
+    clearButton.textContent = "CE";
+    previousKey = "digit";
   });
 });
 
 document.querySelector(".decimal").addEventListener("click", () => {
-  if (!calculatorDisplay.innerText.includes(".")) {
-    calculatorDisplay.innerText = calculatorDisplay.innerText + ".";
+  if (!calculatorDisplay.textContent.includes(".")) {
+    calculatorDisplay.textContent = calculatorDisplay.textContent + ".";
   } else if (previousKey === "operator" || previousKey === "calculate") {
-    calculatorDisplay.innerText = "0";
+    calculatorDisplay.textContent = "0.";
   }
+  clearButton.textContent = "CE";
+  previousKey = "decimal";
 });
 
 document.querySelectorAll(".operator").forEach((item) => {
   item.addEventListener("click", (e) => {
-    firstValue = calculatorDisplay.textContent;
     operator = e.target.id;
-    console.log(firstValue);
-    console.log(operator);
+    if (!firstValue) {
+      firstValue = calculatorDisplay.textContent;
+    } else {
+      if (previousKey === "digit") {
+        secondValue = calculatorDisplay.textContent;
+        const returnValue = calculate(firstValue, operator, secondValue);
+        calculatorDisplay.textContent = returnValue;
+        firstValue = returnValue;
+      }
+    }
+    previousKey = "operator";
   });
 });
 
 document.querySelector(".calculate").addEventListener("click", () => {
   if (firstValue) {
     secondValue = calculatorDisplay.textContent;
+  } else {
+    firstValue = calculatorDisplay.textContent;
+  }
+  if (previousKey === "calculate") {
+    calculatorDisplay.textContent = calculate(
+      secondValue,
+      operator,
+      firstValue
+    );
   }
   calculatorDisplay.textContent = calculate(firstValue, operator, secondValue);
+  firstValue = "";
+  previousKey = "calculate";
+});
+
+document.querySelector(".clear").addEventListener("click", () => {
+  if ((clearButton.textContent = "CE")) {
+    calculatorDisplay.textContent = "0";
+    clearButton.textContent = "AC";
+    firstValue = "";
+    operator = "";
+    secondValue = "";
+  }
 });
 
 let calculate = function (firstValue, operator, secondValue) {
@@ -70,5 +90,9 @@ let calculate = function (firstValue, operator, secondValue) {
   } else if (operator === "divide") {
     result = parseFloat(firstValue) / parseFloat(secondValue);
   }
-  return result;
+  if (Number.isInteger(result)) {
+    return result;
+  } else {
+    return result.toFixed(3);
+  }
 };
