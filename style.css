@@ -15,6 +15,7 @@ body {
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-areas:
     "display display display display"
+    "display display display display"
     "clear clear divide multiply"
     "seven eight nine minus"
     "four five six plus"
