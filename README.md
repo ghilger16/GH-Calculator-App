@@ -8,10 +8,9 @@ Try it [here](https://ghilger16.github.io/GH-Calculator-App/)
 
 #### Summary
 
-With this being my third project, it was nice to see that the headaches
-from the previous projects have now become skills that i could easily apply.  The layout,
-events and gameplay functions came easier to, and was able to grasp how i can create
-working code when first scoping out the project.
+With this project i was able to focus more on applying some clean code principles. My aim above
+functionality was to make the code easier for others to read and maintain. This certainly hightend my
+craftmanship to a new level.
 
 #### Author
 
