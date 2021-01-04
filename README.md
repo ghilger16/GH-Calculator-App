@@ -4,7 +4,7 @@ A virtual calculator written in pure Javascript, HTML and CSS
 
 Try it [here](https://ghilger16.github.io/GH-Calculator-App/)
 
-![](Images/preview.png)
+![](Images/Preview.png)
 
 #### Summary
 
