@@ -15,8 +15,7 @@ document.querySelectorAll(".digits").forEach((item) => {
       calculatorDisplay.textContent = userSelection;
     } else {
       if (calculatorDisplay.textContent.length < 10) {
-        calculatorDisplay.textContent =
-          calculatorDisplay.textContent + userSelection;
+        calculatorDisplay.textContent += userSelection;
       }
     }
     clearButton.textContent = "CE";
@@ -26,7 +25,7 @@ document.querySelectorAll(".digits").forEach((item) => {
 
 document.querySelector(".decimal").addEventListener("click", () => {
   if (!calculatorDisplay.textContent.includes(".")) {
-    calculatorDisplay.textContent = calculatorDisplay.textContent + ".";
+    calculatorDisplay.textContent += ".";
   } else if (previousKey === "operator" || previousKey === "calculate") {
     calculatorDisplay.textContent = "0.";
   }
@@ -44,7 +43,7 @@ document.querySelectorAll(".operator").forEach((item) => {
         secondValue = calculatorDisplay.textContent;
         const returnValue = calculate(firstValue, operator, secondValue);
         calculatorDisplay.textContent = returnValue;
-        firstValue = returnValue;
+        firstValue = `${returnValue}`;
       }
     }
     previousKey = "operator";
@@ -52,25 +51,17 @@ document.querySelectorAll(".operator").forEach((item) => {
 });
 
 document.querySelector(".calculate").addEventListener("click", () => {
-  if (firstValue) {
-    secondValue = calculatorDisplay.textContent;
-  } else {
-    firstValue = calculatorDisplay.textContent;
-  }
-  if (previousKey === "calculate") {
-    calculatorDisplay.textContent = calculate(
-      secondValue,
-      operator,
-      firstValue
-    );
-  }
+  if (previousKey === "operator" || !firstValue) return;
+
+  secondValue = calculatorDisplay.textContent;
+
   calculatorDisplay.textContent = calculate(firstValue, operator, secondValue);
   firstValue = "";
   previousKey = "calculate";
 });
 
 document.querySelector(".clear").addEventListener("click", () => {
-  if ((clearButton.textContent = "CE")) {
+  if (clearButton.textContent === "CE") {
     calculatorDisplay.textContent = "0";
     clearButton.textContent = "AC";
     firstValue = "";
@@ -79,17 +70,31 @@ document.querySelector(".clear").addEventListener("click", () => {
   }
 });
 
+const plus = (num1, num2) => {
+  return parseFloat(num1) + parseFloat(num2);
+};
+const minus = (num1, num2) => {
+  return parseFloat(num1) - parseFloat(num2);
+};
+const multiply = (num1, num2) => {
+  return parseFloat(num1) * parseFloat(num2);
+};
+const divide = (num1, num2) => {
+  return parseFloat(num1) / parseFloat(num2);
+};
+
 let calculate = function (firstValue, operator, secondValue) {
-  let result = "";
-  if (operator === "plus") {
-    result = parseFloat(firstValue) + parseFloat(secondValue);
-  } else if (operator === "minus") {
-    result = parseFloat(firstValue) - parseFloat(secondValue);
-  } else if (operator === "multiply") {
-    result = parseFloat(firstValue) * parseFloat(secondValue);
-  } else if (operator === "divide") {
-    result = parseFloat(firstValue) / parseFloat(secondValue);
-  }
+  const operations = {
+    plus,
+    minus,
+    multiply,
+    divide,
+  };
+
+  const operation = operations[operator];
+
+  const result = operation(firstValue, secondValue);
+
   if (Number.isInteger(result)) {
     return result;
   } else {
